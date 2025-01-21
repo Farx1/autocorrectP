@@ -1,0 +1,50 @@
+services:
+    app:
+        build:
+            context: ..
+            dockerfile: ./docker/Dockerfile
+            target: runner
+        depends_on:
+            - postgres
+            - redis
+        environment:
+            - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+            - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+
+            - RESEND_API_KEY=${RESEND_API_KEY}
+            - RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL}
+
+            - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+
+            - REDIS_URL=redis://redis:6379
+
+            - ARCJET_API_KEY=${ARCJET_API_KEY}
+
+            - NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY}
+            - NEXT_PUBLIC_POSTHOG_HOST=${NEXT_PUBLIC_POSTHOG_HOST}
+
+            - TRIGGER_SECRET_KEY=${TRIGGER_SECRET_KEY}
+
+            - FLAGS_SECRET=${FLAGS_SECRET}
+
+    postgres:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+    redis:
+        image: redis:alpine
+        restart: always
+        volumes:
+            - redis_data:/data
+
+volumes:
+    postgres_data:
+        driver: local
+    redis_data:
+        driver: local
