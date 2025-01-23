@@ -30,9 +30,7 @@ const createAuthStore = (initState: Partial<AuthStore> = {}) => {
 
 // Create context
 export type AuthStoreApi = ReturnType<typeof createAuthStore>;
-export const AuthStoreContext = createContext<AuthStoreApi | undefined>(
-    undefined
-);
+export const AuthStoreContext = createContext<AuthStoreApi | null>(null);
 
 // Provider component
 export interface AuthStoreProviderProps {
@@ -44,8 +42,10 @@ export const AuthStoreProvider = ({
     children,
     initialState = {},
 }: AuthStoreProviderProps) => {
-    const storeRef = useRef<AuthStoreApi>(null);
-    if (!storeRef.current) {
+    // Using MutableRefObject instead of RefObject
+    const storeRef = useRef<AuthStoreApi | null>(null);
+    
+    if (storeRef.current === null) {
         storeRef.current = createAuthStore(initialState);
     }
 

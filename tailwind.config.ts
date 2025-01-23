@@ -220,13 +220,13 @@ export const borderRadii = {
     "20": "1.25rem",
 } as unknown as Record<string, string>;
 
-const config = {
+const config: Config = {
     darkMode: ["class"],
     safelist: [".dark"],
     content: [
-        "./app/**/*.{js,ts,jsx,tsx,mdx}",
+        "./pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./components/**/*.{js,ts,jsx,tsx,mdx}",
-        "./utils/**/*.{js,ts,jsx,tsx,mdx}",
+        "./app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
     theme: {
         colors: {
@@ -530,6 +530,7 @@ const config = {
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
+                float: "float 8s ease-in-out infinite",
             },
             keyframes: {
                 "accordion-down": {
@@ -545,6 +546,20 @@ const config = {
                         opacity: "1",
                     },
                     to: { height: "0", opacity: "0" },
+                },
+                float: {
+                    "0%": {
+                        transform: "translateY(0px) rotate(0deg)",
+                        opacity: "0",
+                    },
+                    "50%": {
+                        transform: "translateY(150px) rotate(180deg)",
+                        opacity: "0.8",
+                    },
+                    "100%": {
+                        transform: "translateY(300px) rotate(360deg)",
+                        opacity: "0",
+                    },
                 },
             },
         },

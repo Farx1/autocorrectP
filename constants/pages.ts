@@ -19,6 +19,7 @@ export const MARKETING_PAGES = {
 
 export const APPLICATION_PAGES = {
     DASHBOARD: "/dashboard",
+    PROFILE_SETTINGS: "/settings/profile-settings",
 };
 
 export const PAGES = {
